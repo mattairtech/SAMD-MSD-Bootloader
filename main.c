@@ -44,7 +44,20 @@
 #include "main.h"
 
 static volatile bool main_b_msc_enable = false;
+struct adc_module adc_instance;
 
+void configure_adc(void)
+{
+	struct adc_config config_adc;
+	adc_get_config_defaults(&config_adc);
+	
+	config_adc.clock_prescaler    = ADC_CLOCK_PRESCALER_DIV32;
+	config_adc.positive_input     = ADC_POSITIVE_INPUT_PIN7;
+	config_adc.negative_input     = ADC_NEGATIVE_INPUT_GND;
+	
+	adc_init(&adc_instance, ADC, &config_adc);
+	adc_enable(&adc_instance);
+}
 
 /**
  * \brief Function for starting application
@@ -113,8 +126,20 @@ void check_boot_mode(void)
 	/* Read the BOOT_LOAD_PIN status */
 	boot_en = ((boot_port->IN.reg) & GPIO_BOOT_PIN_MASK);
 	
+#if (BOOT_TEST_VBUS_VALUE != 0)
+	uint16_t vbus_voltage;
+	adc_start_conversion(&adc_instance);
+	
+	do {
+		/* Wait for conversion to be done and read out result */
+	} while (adc_read(&adc_instance, &vbus_voltage) == STATUS_BUSY);
+	
+	/* Check the BOOT pin, vbus voltage, or the reset cause is Watchdog */
+	if (((boot_en) && (vbus_voltage < BOOT_TEST_VBUS_VALUE)) || (PM->RCAUSE.reg & PM_RCAUSE_WDT)) {
+#else
 	/* Check the BOOT pin or the reset cause is Watchdog */
 	if ((boot_en) || (PM->RCAUSE.reg & PM_RCAUSE_WDT)) {
+#endif
 		app_check_address = APP_START_ADDRESS;
 		app_check_address_ptr = (uint32_t *) app_check_address;
 		
@@ -153,6 +178,9 @@ int main(void)
 	struct nvm_config config;
 	
 	/* Check switch state to enter boot mode or application mode */
+#if (BOOT_TEST_VBUS_VALUE != 0)
+	configure_adc();
+#endif
 	check_boot_mode();
 	
 	irq_initialize_vectors();

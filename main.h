@@ -50,7 +50,18 @@
 #include "mt-d21e/conf_usb.h"
 #include "mt-d21e/conf_bootloader.h"
 
+/* To enable running the bootloader if USB is connected (run application otherwise),
+ * set BOOT_TEST_VBUS_VALUE to a non-zero value that represents the voltage threshold.
+ * This value represents about 0.4V. When using the voltage divider on the MT-D21E
+ * (200K top resistor and 20K bottom resistor), this value is reached when the
+ * Vbus pin is at 4.4V. In order to prevent leakage current from one of the diodes
+ * from triggering a false Vbus > 4.4V condition, keep the diode below 70C.
+ */ 
+//#define BOOT_TEST_VBUS_VALUE	0x0660
+#define BOOT_TEST_VBUS_VALUE	0
+
 void start_application(void);
+void configure_adc(void);
 void check_boot_mode(void);
 
 /*! \brief Called by MSC interface

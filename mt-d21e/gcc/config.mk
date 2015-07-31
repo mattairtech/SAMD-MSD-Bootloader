@@ -69,6 +69,7 @@ CSRCS = \
        sam0/drivers/nvm/nvm.c                             \
        sam0/drivers/extint/extint.c                       \
        sam0/drivers/extint/extint_callback.c              \
+       sam0/drivers/adc/adc.c                             \
        sam0/drivers/port/port.c                           \
        sam0/drivers/system/clock/clock_samd21_r21/clock.c \
        sam0/drivers/system/clock/clock_samd21_r21/gclk.c  \
@@ -109,6 +110,7 @@ INC_PATH = \
        sam0/boards                                        \
        sam0/drivers/nvm                                   \
        sam0/drivers/extint                                \
+       sam0/drivers/adc                                   \
        sam0/drivers/port                                  \
        sam0/drivers/system                                \
        sam0/drivers/system/clock                          \
@@ -180,6 +182,7 @@ CFLAGS =
 # __SAMD21J15A__ __SAMD21J16A__ __SAMD21J17A__ __SAMD21J18A__
 CPPFLAGS = \
        -D ACCESS_USB_ENABLED                              \
+       -D ADC_CALLBACK_MODE=false                         \
        -D ARM_MATH_CM0=true                               \
        -D BOARD=USER_BOARD                                \
        -D EXTINT_CALLBACK_MODE=true                       \
