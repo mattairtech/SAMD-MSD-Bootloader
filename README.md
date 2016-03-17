@@ -80,6 +80,32 @@ bootloader button.
 
 ## Technical Notes
 
+First, this is an MSC device (MSD), which merely transfers 512 byte blocks of data
+between the host and the flash memory. MSC devices to not need any filesystem
+implementation. It is the host that needs to understand the filesystem. Some devices
+(cellphones) do implement FAT, but must unmount the filesystem from the phone OS before
+mounting to the computer OS using USB MSC (because it is simply a block device to the
+computer). Second, the flash memory must not actually contain any FAT structures (like
+the file allocation tables themselves). It can only contain the binary file that is
+transferred.
+
+With these two things in mind, a minimal FAT implementation was needed, with FAT
+structures stored in the bootloader itself rather than anywhere in the rest of the flash.
+That's where the Virtual Memory folder comes in. This code basically can tell the
+difference between the FAT structures and the user binary, and it inserts/removes the FAT
+portions from the 512 byte blocks. This piece of code is the core of this bootloader, and
+it was written by Dean Camera of LUFA (www.lufa-lib.org) for an MSC bootloader for AVR
+8-bit devices. Brilliant!
+
+Note that ASF includes examples for an MSC based bootloader
+(sam0/applications/usb_msc_bootloader). However, this bootloader uses USB host mode to
+transfer data from a connected USB flash memory stick. I basically combined this ASF
+bootloader with the LUFA virtual memory code and some parts of another ASF example (USB
+MSC related).
+
+
+### Boot Process
+
 The startup portion of the bootloader will run prior to executing your firmware.
 This startup code will enable the bootloader button pullup resistor, wait 8ms for the
 debouncing capacitor to charge (MT-D21E), then test the state of the button. If it is
