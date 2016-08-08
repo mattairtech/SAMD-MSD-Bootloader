@@ -70,7 +70,7 @@ static const FATBootBlock_t BootBlock =
 		.PhysicalDriveNum        = 0,
 		.ExtendedBootRecordSig   = 0x29,
 		.VolumeSerialNumber      = 0x12345678,
-		.VolumeLabel             = "MT-D21E MSD",
+		.VolumeLabel             = VOLUMELABEL,
 		.FilesystemIdentifier    = "FAT12   ",
 	};
 
@@ -85,7 +85,7 @@ static FATDirectoryEntry_t FirmwareFileEntries[] =
 		{
 			.MSDOS_Directory =
 				{
-					.Name            = "MT-D21E MSD",
+					.Name            = VOLUMELABEL,
 					.Attributes      = FAT_FLAG_VOLUME_NAME,
 					.Reserved        = {0},
 					.CreationTime    = 0,

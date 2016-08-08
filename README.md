@@ -10,6 +10,13 @@ bits (2:0) are set 0x01, which will protect the first 16KB of FLASH from interna
 external programming (from 0x00000000 to 0x00004000).
 
 
+## Configuring the Bootloader
+
+You can modify the button and LED pin assignments in mt-d21e/board/user_board.h.
+You can modify the the USB vendor ID, product ID, and other USB MSC class device strings
+in mt-d21e/conf_usb.h.
+
+
 ## Building the Bootloader
 
 The source code depends on Atmel ASF. I used the Atmel Standalone ARM Toolchain (gcc)
@@ -28,9 +35,6 @@ You will need ASF 3.19+ installed in the directory indicated in config.mk (PRJ_P
 it must be built within the ASF directory tree. In my case, I created a symbolic link
 in the xdk-asf-3.19.0 directory called 'SAMD-MSD-Bootloader', pointing to the source
 code in '/home/cygnus/SAMD-MSD-Bootloader'.
-
-You may also wish to modify the button and LED pin assignments, or the product and
-vendor information (USB MSC class device strings). Consult the source code.
 
 
 ## Compiling Firmware to use the Bootloader
@@ -65,9 +69,9 @@ hard drive. It will include the installed firmware plus 0xFF for the remainder o
 file (up to the end of the FLASH).
 
 Program the FLASH by copying your new FLASH.BIN over the existing copy on the
-“FLASH disk”. On Windows, you can do this with a file manager. On OS-X (and possibly
+“FLASH disk”. On Windows, you can do this with a file manager. On OS X (and possibly
 Linux), you will need to use the cp command, which should already be present. Open up a
-console (Terminal on OS-X) and type (adjust for your system):
+console (Terminal on OS X) and type (adjust for your system):
 
 ```
 cp FLASH.BIN '/run/media/cygnus/MT-D21E MSD'
@@ -119,10 +123,10 @@ not pressed, the user firmware will be executed as follows:
 ## Bootloader Entry when USB is connected
 
 To enable running the bootloader if USB is connected (run application otherwise),
-set BOOT_TEST_VBUS_VALUE to a non-zero value that represents the voltage threshold.
-The value 0x0660 represents about 0.4V. When using the voltage divider on the MT-D21E
-(200K top resistor and 20K bottom resistor), this value is reached when the
-Vbus pin is at 4.4V. In order to prevent leakage current from one of the diodes
+set BOOT_TEST_VBUS_VALUE in main.h to a non-zero value that represents the voltage
+threshold.The value 0x0660 represents about 0.4V. When using the voltage divider on
+the MT-D21E (200K top resistor and 20K bottom resistor), this value is reached when
+the Vbus pin is at 4.4V. In order to prevent leakage current from one of the diodes
 from triggering a false Vbus > 4.4V condition, keep the diode below 70C (158F).
 
 ## Known Issues

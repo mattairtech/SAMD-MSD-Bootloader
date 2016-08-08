@@ -74,7 +74,7 @@
 #define Lun_0_removal                           virtual_removal
 #define Lun_0_usb_read_10                       virtual_usb_read_10
 #define Lun_0_usb_write_10                      virtual_usb_write_10
-#define LUN_0_NAME                              "\"MT-D21E Bootloader\""
+#define LUN_0_NAME                              "\"Mass-Storage Bootloader\""
 //! @}
 
 /*! \name USB LUNs Definitions

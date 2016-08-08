@@ -37,6 +37,7 @@
 
 		#include "virtual_flash_mem.h"
 		#include "conf_bootloader.h"
+		#include "conf_usb.h"
 
 	/* Macros: */
 		/** Size of the virtual FLASH.BIN file in bytes. */

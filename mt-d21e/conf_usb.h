@@ -52,9 +52,16 @@
  * @{
  */
 
-//! Device definition (mandatory)
+//! USB Device string definitions (Optional)
+#define  USB_DEVICE_MANUFACTURE_NAME      "MattairTech LLC"
+#define  USB_DEVICE_PRODUCT_NAME          "MT-D21E MSD Bootloader"
+#define  USB_DEVICE_SERIAL_NAME           "748651195830"	// Disk SN for MSC
+
+//! USB Vendor ID and Product ID
 #define  USB_DEVICE_VENDOR_ID             0x16D0
 #define  USB_DEVICE_PRODUCT_ID            0x0A0C
+
+//! Device definition (mandatory)
 #define  USB_DEVICE_MAJOR_VERSION         1
 #define  USB_DEVICE_MINOR_VERSION         0
 #define  USB_DEVICE_POWER                 100 // Consumption on Vbus line (mA)
@@ -64,10 +71,7 @@
 //	(USB_CONFIG_ATTR_REMOTE_WAKEUP|USB_CONFIG_ATTR_SELF_POWERED)
 //	(USB_CONFIG_ATTR_REMOTE_WAKEUP|USB_CONFIG_ATTR_BUS_POWERED)
 
-//! USB Device string definitions (Optional)
-#define  USB_DEVICE_MANUFACTURE_NAME      "MattairTech LLC"
-#define  USB_DEVICE_PRODUCT_NAME          "MT-D21E MSD Bootloader"
-#define  USB_DEVICE_SERIAL_NAME           "748651195830"	// Disk SN for MSC
+#define  VOLUMELABEL            "MT-D21E MSD"
 
 /**
  * Device speeds support
