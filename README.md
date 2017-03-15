@@ -9,6 +9,8 @@ no special software is required on the host computer. The bootloader occupies th
 bits (2:0) are set 0x01, which will protect the first 16KB of FLASH from internal or
 external programming (from 0x00000000 to 0x00004000).
 
+If you need a bootloader with both CDC and MSD, see https://github.com/watterott/SAM-BAR.
+
 
 ## Configuring the Bootloader
 
